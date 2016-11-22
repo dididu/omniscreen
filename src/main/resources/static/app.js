@@ -5,8 +5,8 @@ function connect() {
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function (frame) {
         console.log('Connected: ' + frame);
-        stompClient.subscribe('/topic/widgets', function (widget) {
-            addWidget(widget.body);
+        stompClient.subscribe('/topic/widgets', function (message) {
+            processMessage(message);
         });
     });
 }
@@ -18,11 +18,16 @@ function disconnect() {
     console.log("Disconnected");
 }
 
-function addWidget(html) {
-    $(document.body).html(html);
+function processMessage(messageText) {
+    console.log("Message body: " + messageText.body);
+    var message = JSON.parse(messageText.body);
+
+    if (message.type == "LAYOUT") {
+        console.log("Layout definition detected");
+        $(document.body).html(message.layoutHtml);
+    }
 }
 
 $(
     connect()
 );
-
