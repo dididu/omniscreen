@@ -11,5 +11,6 @@ public class PayloadMessageContainer extends MessageContainer {
     public PayloadMessageContainer(String selector, String html) {
         this.selector = selector;
         this .payloadHtml = html;
+        this.type = Type.PAYLOAD;
     }
 }

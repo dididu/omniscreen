@@ -1,6 +1,5 @@
 package org.dididu.controller;
 
-import org.dididu.domain.LayoutMessageContainer;
 import org.dididu.domain.PayloadDefinition;
 import org.dididu.domain.PayloadMessageContainer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,30 +16,16 @@ public class SubmitController {
     @Autowired
     private SimpMessagingTemplate template;
 
-    @RequestMapping(value = "/widget", method = RequestMethod.POST,
+    @RequestMapping(value = "/submit", method = RequestMethod.POST,
             consumes = "application/json")
     @ResponseStatus(HttpStatus.OK)
     public void submitUpdate(@RequestBody PayloadDefinition payload) {
         try {
             String decodedHtml = URLDecoder.decode(payload.payloadHtml, "utf-8");
             PayloadMessageContainer payloadMessageContainer =
-                    new PayloadMessageContainer(payload.id, decodedHtml);
+                    new PayloadMessageContainer(payload.selector, decodedHtml);
 
             template.convertAndSend("/topic/widgets", payloadMessageContainer);
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @RequestMapping(value = "/layout", method = RequestMethod.POST,
-            consumes = "application/json")
-    @ResponseStatus(HttpStatus.OK)
-    public void submitLayout(@RequestBody String layoutHtml) {
-        try {
-            String decodedLayoutHtml = URLDecoder.decode(layoutHtml, "utf-8");
-            LayoutMessageContainer layoutMessageContainer = new LayoutMessageContainer(decodedLayoutHtml);
-
-            template.convertAndSend("/topic/widgets", layoutMessageContainer);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }

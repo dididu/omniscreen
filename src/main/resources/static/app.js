@@ -22,11 +22,17 @@ function processMessage(messageText) {
     console.log("Message body: " + messageText.body);
     var message = JSON.parse(messageText.body);
 
-    if (message.type == "LAYOUT") {
-        console.log("Layout definition detected");
-        $(document.body).html(message.layoutHtml);
+    if (message.type == "PAYLOAD") {
+        processPayloadMessage(message);
     }
 }
+
+function processPayloadMessage(message) {
+    console.log("Payload definition detected");
+    console.log("Selector: " + message.selector + ", payloadHtml: " + message.payloadHtml);
+    $(message.selector).html(message.payloadHtml);
+}
+
 
 $(
     connect()
