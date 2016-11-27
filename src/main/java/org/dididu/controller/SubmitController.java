@@ -16,6 +16,7 @@ public class SubmitController {
     @Autowired
     private SimpMessagingTemplate template;
 
+
     @RequestMapping(value = "/submit", method = RequestMethod.POST,
             consumes = "application/json")
     @ResponseStatus(HttpStatus.OK)
@@ -30,4 +31,6 @@ public class SubmitController {
             e.printStackTrace();
         }
     }
+
+
 }
