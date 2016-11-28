@@ -9,7 +9,7 @@ function connect() {
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function (frame) {
         console.log('Connected: ' + frame);
-        stompClient.subscribe('/topic/widgets', function (message) {
+        stompClient.subscribe('/submit-topic/' + clientId, function (message) {
             processMessage(message);
             sendResult();
         });

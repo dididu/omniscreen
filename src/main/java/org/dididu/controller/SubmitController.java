@@ -16,17 +16,17 @@ public class SubmitController {
     @Autowired
     private SimpMessagingTemplate template;
 
-
-    @RequestMapping(value = "/submit", method = RequestMethod.POST,
+    @RequestMapping(value = "/{clientId}", method = RequestMethod.POST,
             consumes = "application/json")
     @ResponseStatus(HttpStatus.OK)
-    public void submitUpdate(@RequestBody PayloadDefinition payload) {
+    public void submit(@PathVariable(value="clientId") String clientId,
+                             @RequestBody PayloadDefinition payload) {
         try {
             String decodedHtml = URLDecoder.decode(payload.payloadHtml, "utf-8");
             PayloadMessageContainer payloadMessageContainer =
                     new PayloadMessageContainer(payload.selector, decodedHtml);
 
-            template.convertAndSend("/topic/widgets", payloadMessageContainer);
+            template.convertAndSend("/submit-topic/" + clientId, payloadMessageContainer);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }

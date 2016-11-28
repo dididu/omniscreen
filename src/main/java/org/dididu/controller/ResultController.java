@@ -25,6 +25,10 @@ public class ResultController {
         clientState.clientId = result.clientId;
         clientState.body = result.body;
 
-        repository.save(clientState);
+        try {
+            repository.save(clientState);
+        } catch (Exception e) {
+            log.error("Error accessing the DB", e);
+        }
     }
 }
