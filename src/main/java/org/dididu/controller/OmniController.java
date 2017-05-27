@@ -10,12 +10,16 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-public class OmniController {
+class OmniController {
 
     private static Logger log = LoggerFactory.getLogger(OmniController.class);
 
+    private final TemplateService templateService;
+
     @Autowired
-    private TemplateService templateService;
+    public OmniController(TemplateService templateService) {
+        this.templateService = templateService;
+    }
 
     @RequestMapping("/display/{userId}")
     public String greeting(@PathVariable("userId") String userId, Model model) {

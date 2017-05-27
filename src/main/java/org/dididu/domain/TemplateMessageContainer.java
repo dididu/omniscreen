@@ -3,12 +3,11 @@ package org.dididu.domain;
 /**
  * Payload message to be sent to the web UI.
  */
-public class TemplateMessageContainer extends MessageContainer {
+public class TemplateMessageContainer {
 
-    public String template;
+    public String renderedTemplate;
 
     public TemplateMessageContainer(String html) {
-        this.template = html;
-        this.type = Type.TEMPLATE;
+        this.renderedTemplate = html;
     }
 }

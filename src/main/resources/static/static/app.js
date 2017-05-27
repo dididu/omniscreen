@@ -11,35 +11,21 @@ function connect() {
         console.log('Connected: ' + frame);
         stompClient.subscribe('/submit-topic/' + clientId, function (message) {
             processMessage(message);
-            //sendResult();
         });
     });
-}
-
-function disconnect() {
-    if (stompClient != null) {
-        stompClient.disconnect();
-    }
-    console.log("Disconnected");
 }
 
 function processMessage(messageText) {
     console.log("Message body: " + messageText.body);
     var message = JSON.parse(messageText.body);
-
-    if (message.type === "TEMPLATE") {
-        processTemplateMessage(message);
-    }
+    processTemplateMessage(message);
 }
 
 function processTemplateMessage(message) {
     console.log("Processing Template message" + message);
-    //console.log("Selector: " + message.selector + ", payloadHtml: " + message.payloadHtml);
-    //$(message.selector).html(message.payloadHtml);
-
-    $("body").html(message.template);
+    $("body").html(message.renderedTemplate);
 }
 
 $(function() {
     connect()
-})
+});

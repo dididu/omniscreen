@@ -16,11 +16,14 @@ import java.net.URLDecoder;
 @Component
 public class TemplateService {
 
-    @Autowired
-    private DataRepository dataRepository;
+    private final DataRepository dataRepository;
+    private final TemplateRepository templateRepository;
 
     @Autowired
-    private TemplateRepository templateRepository;
+    public TemplateService(DataRepository dataRepository, TemplateRepository templateRepository) {
+        this.dataRepository = dataRepository;
+        this.templateRepository = templateRepository;
+    }
 
     public void saveTemplateForUser(String user, TemplateDefinition templateDefinition) {
         templateDefinition.user = user;
@@ -41,7 +44,7 @@ public class TemplateService {
         VelocityContext context = new VelocityContext();
 
         if (templateData != null) {
-            templateData.data.forEach((key, value) -> context.put(key, value));
+            templateData.data.forEach(context::put);
         }
 
         Velocity.evaluate(context, writer, "", templateDefinition.template);

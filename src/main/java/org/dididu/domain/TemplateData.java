@@ -9,5 +9,5 @@ public class TemplateData {
     @Id
     public String user;
 
-    public Map<String, String> data = new HashMap<>();
+    public final Map<String, String> data = new HashMap<>();
 }

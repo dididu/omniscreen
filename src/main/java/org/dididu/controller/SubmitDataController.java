@@ -9,13 +9,16 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-public class SubmitDataController {
+class SubmitDataController {
+
+    private final SimpMessagingTemplate messagingTemplate;
+    private final TemplateService templateService;
 
     @Autowired
-    private SimpMessagingTemplate messagingTemplate;
-
-    @Autowired
-    private TemplateService templateService;
+    public SubmitDataController(SimpMessagingTemplate messagingTemplate, TemplateService templateService) {
+        this.messagingTemplate = messagingTemplate;
+        this.templateService = templateService;
+    }
 
     @RequestMapping(value = "/{userId}/data", method = RequestMethod.POST,
             consumes = "application/json")
