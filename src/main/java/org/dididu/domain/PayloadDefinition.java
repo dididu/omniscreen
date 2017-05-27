@@ -5,5 +5,5 @@ package org.dididu.domain;
  */
 public class PayloadDefinition {
     public String selector;
-    public String payloadHtml;
+    public String payload;
 }

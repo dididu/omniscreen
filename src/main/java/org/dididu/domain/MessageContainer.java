@@ -5,8 +5,8 @@ package org.dididu.domain;
  */
 public class MessageContainer {
     public enum Type {
-        PAYLOAD,
-        STYLE
+        TEMPLATE,
+        DATA
     };
 
     public Type type;

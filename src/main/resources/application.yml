@@ -3,3 +3,6 @@ spring:
     mongodb:
       host: db
       database: omni-screen
+
+#server:
+#  contextPath: /omniscreen
