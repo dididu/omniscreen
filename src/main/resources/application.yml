@@ -1,8 +1,7 @@
 spring:
   data:
     mongodb:
-      host: db
-      database: omni-screen
-
-#server:
-#  contextPath: /omniscreen
+      host: ${mongo.host}
+      database: ${mongo.database}
+      username: ${mongo.username}
+      password: ${mongo.password}
