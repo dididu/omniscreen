@@ -14,7 +14,7 @@ import java.io.UnsupportedEncodingException
 import java.net.URLDecoder
 
 @Component
-class TemplateService @Autowired
+open class TemplateService @Autowired
 constructor(private val dataRepository: DataRepository, private val templateRepository: TemplateRepository) {
 
     fun saveTemplateForUser(user: String, templateDefinition: TemplateDefinition) {
@@ -23,8 +23,20 @@ constructor(private val dataRepository: DataRepository, private val templateRepo
     }
 
     fun saveDataForUser(user: String, templateData: TemplateData) {
-        templateData.user = user
-        dataRepository.save(templateData)
+        val currentData = dataRepository.findOne(user);
+
+        val resultData = HashMap<String, String>();
+
+        if (currentData != null) {
+            resultData.putAll(currentData.data);
+        }
+
+        resultData.putAll(templateData.data);
+
+
+        val resultTemplateData = TemplateData(user);
+        resultTemplateData.data = resultData;
+        dataRepository.save(resultTemplateData)
     }
 
     fun renderTemplateForUser(user: String): String {

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 @Controller
 internal class OmniController @Autowired
 constructor(private val templateService: TemplateService) {
-    @RequestMapping("/display/{userId}")
+    @RequestMapping("/{userId}/display")
     fun greeting(@PathVariable("userId") userId: String, model: Model): String {
         model.addAttribute("clientId", userId)
         model.addAttribute("body", templateService.renderTemplateForUser(userId))
