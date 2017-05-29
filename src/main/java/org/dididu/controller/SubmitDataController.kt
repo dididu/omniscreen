@@ -1,5 +1,6 @@
 package org.dididu.controller
 
+import org.dididu.domain.RestTemplateData
 import org.dididu.service.TemplateService
 import org.dididu.domain.TemplateData
 import org.dididu.domain.TemplateMessageContainer
@@ -15,9 +16,10 @@ constructor(private val messagingTemplate: SimpMessagingTemplate, private val te
     @RequestMapping(value = "/{userId}/data", method = arrayOf(RequestMethod.POST), consumes = arrayOf("application/json"))
     @ResponseStatus(HttpStatus.OK)
     fun submit(@PathVariable("userId") userId: String,
-               @RequestBody templateData: TemplateData) {
+               @RequestBody restTemplateData: RestTemplateData) {
 
-        templateService.saveDataForUser(userId, templateData)
+        val templateData = TemplateData(userId, restTemplateData.data)
+        templateService.saveData(templateData)
         val templateMessageContainer = TemplateMessageContainer(templateService.renderTemplateForUser(userId))
 
         messagingTemplate.convertAndSend("/submit-topic/" + userId, templateMessageContainer)

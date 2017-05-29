@@ -17,13 +17,12 @@ import java.net.URLDecoder
 open class TemplateService @Autowired
 constructor(private val dataRepository: DataRepository, private val templateRepository: TemplateRepository) {
 
-    fun saveTemplateForUser(user: String, templateDefinition: TemplateDefinition) {
-        templateDefinition.user = user
+    fun saveTemplate(templateDefinition: TemplateDefinition) {
         templateRepository.save(templateDefinition)
     }
 
-    fun saveDataForUser(user: String, templateData: TemplateData) {
-        val currentData = dataRepository.findOne(user);
+    fun saveData(templateData: TemplateData) {
+        val currentData = dataRepository.findOne(templateData.user);
 
         val resultData = HashMap<String, String>();
 
@@ -33,9 +32,7 @@ constructor(private val dataRepository: DataRepository, private val templateRepo
 
         resultData.putAll(templateData.data);
 
-
-        val resultTemplateData = TemplateData(user);
-        resultTemplateData.data = resultData;
+        val resultTemplateData = TemplateData(templateData.user, resultData);
         dataRepository.save(resultTemplateData)
     }
 

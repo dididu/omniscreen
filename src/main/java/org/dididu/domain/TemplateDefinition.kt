@@ -5,4 +5,4 @@ import org.springframework.data.annotation.Id
 /**
  * Defines template.
  */
-data class TemplateDefinition(@Id var user: String, var template: String)
+class TemplateDefinition(@Id val user: String, val template: String)

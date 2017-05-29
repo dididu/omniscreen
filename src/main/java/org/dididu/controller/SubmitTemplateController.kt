@@ -1,7 +1,7 @@
 package org.dididu.controller
 
-import org.dididu.service.TemplateService
 import org.dididu.domain.TemplateDefinition
+import org.dididu.service.TemplateService
 import org.dididu.domain.TemplateMessageContainer
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
@@ -15,9 +15,11 @@ constructor(private val messagingTemplate: SimpMessagingTemplate, private val te
     @RequestMapping(value = "/{userId}/template", method = arrayOf(RequestMethod.POST), consumes = arrayOf("application/json"))
     @ResponseStatus(HttpStatus.OK)
     fun submit(@PathVariable("userId") userId: String,
-               @RequestBody templateDefinition: TemplateDefinition) {
+               @RequestBody templateString: String) {
 
-        templateService.saveTemplateForUser(userId, templateDefinition)
+        val templateDefinition = TemplateDefinition(userId, templateString)
+        templateService.saveTemplate(templateDefinition)
+
         val templateMessageContainer = TemplateMessageContainer(templateService.renderTemplateForUser(userId))
         messagingTemplate.convertAndSend("/submit-topic/" + userId, templateMessageContainer)
     }
