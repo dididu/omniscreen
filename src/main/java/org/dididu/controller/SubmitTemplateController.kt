@@ -24,7 +24,7 @@ constructor(private val messagingTemplate: SimpMessagingTemplate, private val te
         val templateDefinition = TemplateDefinition(userId, templateString)
         templateService.saveTemplate(templateDefinition)
 
-        val templateMessageContainer = TemplateMessageContainer(templateService.renderTemplateForUser(userId))
+        val templateMessageContainer = templateService.renderTemplateForUser(userId)
         messagingTemplate.convertAndSend("/submit-topic/" + userId, templateMessageContainer)
     }
 
