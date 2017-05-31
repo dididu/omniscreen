@@ -24,6 +24,7 @@ function processMessage(messageText) {
 function processTemplateMessage(message) {
     console.log("Processing Template message" + message);
     $("body").html(message.renderedTemplate);
+    $("style").html(message.style);
 }
 
 $(function() {
