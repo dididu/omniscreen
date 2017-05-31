@@ -14,9 +14,16 @@ internal class OmniController @Autowired
 constructor(private val templateService: TemplateService) {
     @RequestMapping("/{userId}/display")
     fun greeting(@PathVariable("userId") userId: String, model: Model): String {
+
+        log.info("/display/$userId");
+
         model.addAttribute("clientId", userId)
         model.addAttribute("body", templateService.renderTemplateForUser(userId))
 
         return "omni"
+    }
+
+    companion object {
+        val log : Logger = LoggerFactory.getLogger(OmniController::class.java)
     }
 }
