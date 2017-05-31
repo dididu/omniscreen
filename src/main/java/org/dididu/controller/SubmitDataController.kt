@@ -30,6 +30,6 @@ constructor(private val messagingTemplate: SimpMessagingTemplate, private val te
     }
 
     companion object {
-        val log : Logger = LoggerFactory.getLogger(OmniController::class.java)
+        val log : Logger = LoggerFactory.getLogger(SubmitDataController::class.java)
     }
 }
