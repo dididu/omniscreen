@@ -44,20 +44,20 @@ constructor(private val dataRepository: DataRepository,
         dataRepository.save(resultTemplateData)
     }
 
+    fun getStyleForUser(user: String): String {
+        return styleRepository.findOne(user)?.style ?:"";
+    }
+
     fun renderTemplateForUser(user: String): String {
 
         val templateDefinition = templateRepository.findOne(user)
-        val styleDefinition = styleRepository.findOne(user)
+
         val templateData = dataRepository.findOne(user)
 
         val writer = StringWriter()
         val context = VelocityContext()
 
         templateData?.data?.forEach({ key, value -> context.put(key, value) })
-
-        if (styleDefinition != null) {
-            context.put("style", styleDefinition.style)
-        }
 
         if (templateDefinition != null) {
             Velocity.evaluate(context, writer, "", templateDefinition.template)

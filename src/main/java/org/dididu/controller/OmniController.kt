@@ -19,6 +19,7 @@ constructor(private val templateService: TemplateService) {
 
         model.addAttribute("clientId", userId)
         model.addAttribute("body", templateService.renderTemplateForUser(userId))
+        model.addAttribute("style", templateService.getStyleForUser(userId))
 
         return "omni"
     }
